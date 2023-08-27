@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Newtonsoft.Json;
 
 namespace WeatherApp
 {
@@ -33,12 +34,14 @@ namespace WeatherApp
             HttpClient httpClient = new HttpClient();
 
             var city = "Hanau";
-            var finaluri = requestUri + "?q=" + city + "&appid=" + apikey;
+            var finaluri = requestUri + "?q=" + city + "&appid=" + apikey + "&units=metric";
             HttpResponseMessage httpresponse = httpClient.GetAsync(finaluri).Result;
 
             string response = httpresponse.Content.ReadAsStringAsync().Result;
 
-            Console.WriteLine(response);
+            WeatherMapResponse weatherMapResponse = JsonConvert.DeserializeObject<WeatherMapResponse>(response);
+
+            Console.WriteLine(weatherMapResponse);
         }
     }
 }
