@@ -36,12 +36,10 @@ namespace WeatherApp
             var city = "Hanau";
             var finaluri = requestUri + "?q=" + city + "&appid=" + apikey + "&units=metric";
             HttpResponseMessage httpresponse = httpClient.GetAsync(finaluri).Result;
-
             string response = httpresponse.Content.ReadAsStringAsync().Result;
-
             WeatherMapResponse weatherMapResponse = JsonConvert.DeserializeObject<WeatherMapResponse>(response);
-
             Console.WriteLine(weatherMapResponse);
         }
     }
 }
+
