@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WeatherApp
 {
-    internal class WeatherMapResponse
+    public class WeatherMapResponse
     {
         public Main main;
         public List<Weather> weather;
