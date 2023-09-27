@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Newtonsoft.Json;
 
 namespace WeatherApp;
 
@@ -36,10 +25,10 @@ public partial class MainWindow : Window
 
     public void UpdateUI(string city)
     {
-       
-       WeatherMapResponse result = GetWeatherData(city);
-       string finalImage = "sun.png";
-       string currentWeather = result.weather[0].main.ToLower();
+
+        WeatherMapResponse result = GetWeatherData(city);
+        string finalImage = "sun.png";
+        _ = result.weather[0].main.ToLower();
 
         if (result.weather[0].main.ToLower().Contains("cloud"))
         {
@@ -49,7 +38,7 @@ public partial class MainWindow : Window
         {
             finalImage = "rain.png";
         }
-        else if (result.weather[0].main.ToLower().Contains("snow")) 
+        else if (result.weather[0].main.ToLower().Contains("snow"))
         {
             finalImage = "snow.png";
         }
@@ -57,23 +46,23 @@ public partial class MainWindow : Window
         {
             finalImage = "sun.png";
         }
-     
-        
 
 
-       backgroundImage.ImageSource = new BitmapImage(new Uri("images/" + finalImage, UriKind.Relative));
+
+
+        backgroundImage.ImageSource = new BitmapImage(new Uri("images/" + finalImage, UriKind.Relative));
 
         labelTemp.Content = result.main.temp.ToString("F1") + "°C";
         labeInfo.Content = result.weather[0].description;
     }
 
-    public WeatherMapResponse GetWeatherData (string city)
-        
+    public WeatherMapResponse GetWeatherData(string city)
+
 
     {
 
-        HttpClient httpClient = new HttpClient();
-        var finaluri = requestUri + "?q=" + city + "&appid=" + apikey + "&units=metric";
+        HttpClient httpClient = new();
+        string finaluri = requestUri + "?q=" + city + "&appid=" + apikey + "&units=metric";
         HttpResponseMessage httpresponse = httpClient.GetAsync(finaluri).Result;
         string response = httpresponse.Content.ReadAsStringAsync().Result;
         WeatherMapResponse weatherMapResponse = JsonConvert.DeserializeObject<WeatherMapResponse>(response);
