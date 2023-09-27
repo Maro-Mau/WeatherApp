@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WeatherApp
+namespace WeatherApp;
+
+public class WeatherMapResponse
 {
-    public class WeatherMapResponse
-    {
-        public Main main;
-        public List<Weather> weather;
-    }
+    public Main main;
+    public List<Weather> weather;
 }
